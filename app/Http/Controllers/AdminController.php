@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -11,15 +14,41 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        // Récupérer tous les utilisateurs sauf ceux ayant le rôle "Admin"
+        $users = User::whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Admin');
+        })->with('roles', 'permissions')->get(); // Récupérer tous les utilisateurs
+        return view('admin.index', compact('users')); // Passer les utilisateurs à la vue
+    }
+    /**
+     * Show the profile of the authenticated user.
+     */
+    public function profile()
+    {
+        $user = Auth::user(); // Récupérer l'utilisateur authentifié
+        return view('admin.profile', compact('user')); // Passer l'utilisateur à la vue
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function editAuthor()
     {
-        //
+        // Récupérer uniquement les utilisateurs ayant le rôle "Author"
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', 'Author');
+        })->with('roles', 'permissions')->get();
+        return view('admin.editAuthor',compact('users'));
+    }
+
+
+    /**
+     * Show the table for list a Reader User.
+     */
+    public function editReader()
+    {
+        // Récupérer uniquement les utilisateurs ayant le rôle "Reader"
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', 'Lecteur');
+        })->with('roles', 'permissions')->get();
+        return view('admin.editReader',compact('users'));
     }
 
     /**

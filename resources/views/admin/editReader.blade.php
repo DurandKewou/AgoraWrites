@@ -21,7 +21,7 @@
           <div class="">
             <div class="card">
               <div class="card-header d-flex justify-content-between align-items-center">
-                <h4>Task Details</h4>
+                <h4>User Details</h4>
                 <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                   <i class="fas fa-plus"></i> Add</button>
               </div>

@@ -1,4 +1,4 @@
-@extends('layouts/author')
+@extends('layouts/admin')
 @section('space-work')
   <!-- Main Content -->
   <div class="main-content">

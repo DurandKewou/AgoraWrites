@@ -63,6 +63,14 @@
                       <label for="password_confirmation" class="d-block">Password Confirmation</label>
                       <input id="password_confirmation" type="password" class="form-control" name="password_confirmation">
                     </div>
+                    <div class="form-group col-6">
+                      <label for="role" class="d-block">Role</label>
+                      <select class="form-control" name="role" id="role" required>
+                        @foreach ($roles as $role)
+                            <option value="{{$role->name}}">{{ucfirst($role->name)}}</option>
+                        @endforeach
+                      </select>
+                    </div>
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-checkbox">
