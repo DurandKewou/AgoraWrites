@@ -1,4 +1,4 @@
-@extends('layouts/admin')
+@extends('layouts/author')
 
 @section('styles')
 <style>
@@ -22,10 +22,10 @@
             <div class="card author-box">
               <div class="card-body">
                 <div class="author-box-center">
-                  <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle author-box-picture">
+                  <img alt="image" src="{{asset(('assets/img/users/user-1.png'))}}" class="rounded-circle author-box-picture">
                   <div class="clearfix"></div>
                   <div class="author-box-name">
-                    <a href="#">Sarah Smith</a>
+                    <a href="#">{{ Auth::user()->name }}</a>
                   </div>
                   <div class="author-box-job">Web Developer</div>
                 </div>
@@ -37,7 +37,7 @@
                     </p>
                   </div>
                   <div class="mb-2 mt-3">
-                    <div class="text-small font-weight-bold">Follow Hasan On</div>
+                    <div class="text-small font-weight-bold">Follow {{ Auth::user()->name }} On</div>
                   </div>
                   <a href="#" class="btn btn-social-icon mr-1 btn-facebook">
                     <i class="fab fa-facebook-f"></i>
@@ -82,7 +82,7 @@
                       Mail
                     </span>
                     <span class="float-right text-muted">
-                      test@example.com
+                      {{ Auth::user()->email }}
                     </span>
                   </p>
                   <p class="clearfix">
@@ -163,7 +163,7 @@
                       <div class="col-md-3 col-6 b-r">
                         <strong>Full Name</strong>
                         <br>
-                        <p class="text-muted">Emily Smith</p>
+                        <p class="text-muted">{{ Auth::user()->name }}</p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Mobile</strong>
@@ -173,7 +173,7 @@
                       <div class="col-md-3 col-6 b-r">
                         <strong>Email</strong>
                         <br>
-                        <p class="text-muted">johndeo@example.com</p>
+                        <p class="text-muted">{{ Auth::user()->email }}</p>
                       </div>
                       <div class="col-md-3 col-6">
                         <strong>Location</strong>
@@ -237,14 +237,14 @@
                         <div class="row">
                           <div class="form-group col-md-6 col-12">
                             <label>First Name</label>
-                            <input type="text" class="form-control" value="John">
+                            <input type="text" class="form-control" value="{{ Auth::user()->name }}">
                             <div class="invalid-feedback">
                               Please fill in the first name
                             </div>
                           </div>
                           <div class="form-group col-md-6 col-12">
                             <label>Last Name</label>
-                            <input type="text" class="form-control" value="Deo">
+                            <input type="text" class="form-control" value="{{ Auth::user()->surname }}">
                             <div class="invalid-feedback">
                               Please fill in the last name
                             </div>
@@ -253,7 +253,7 @@
                         <div class="row">
                           <div class="form-group col-md-7 col-12">
                             <label>Email</label>
-                            <input type="email" class="form-control" value="test@example.com">
+                            <input type="email" class="form-control" value="{{ Auth::user()->email }}">
                             <div class="invalid-feedback">
                               Please fill in the email
                             </div>

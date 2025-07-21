@@ -1,4 +1,4 @@
-@extends('layouts/welcome')
+@extends('layouts/author')
 @section('space-work')
 
 <div class="row">

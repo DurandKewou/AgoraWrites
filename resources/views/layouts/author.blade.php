@@ -8,6 +8,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>AgoraWrite</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset(('assets/css/app.min.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/bootstrap-social/bootstrap-social.css'))}}">
@@ -164,13 +165,13 @@
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
             <a href="index.html"> <img alt="image" src="{{asset(('assets/img/logo.png'))}}" class="header-logo" /> <span
-                class="logo-name">Todo</span>
+                class="logo-name">AgoraWrite</span>
             </a>
           </div>
           <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
             <li class="dropdown">
-              <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+              <a href="/author/index" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Post Manager</li>
             <li class="dropdown">
@@ -178,7 +179,7 @@
                   data-feather="briefcase"></i><span>Post Manager</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="/author/createPost">Create Post</a></li>
-                <li><a class="nav-link" href="/post">Post</a></li>
+                <li><a class="nav-link" href="/author/post">Post</a></li>
               </ul>
             </li>
             <li class="menu-header">Setting</li>
@@ -186,7 +187,7 @@
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
                   data-feather="user-check"></i><span>Auth</span></a>
               <ul class="dropdown-menu">
-                <li class="active"><a class="nav-link" href="/profile">Profile</a></li>
+                <li class="active"><a class="nav-link" href="/author/profile">Profile</a></li>
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Register</a></li>
                 <li><a href="/forgot-password">Forgot Password</a></li>
