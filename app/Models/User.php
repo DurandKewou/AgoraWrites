@@ -23,6 +23,13 @@ class User extends Authenticatable
         'surname',
         'email',
         'password',
+        'phone',
+        'address',
+        'city',
+        'country',
+        'postal_code',
+        'birthdate',
+        'role', // Assurez-vous que le champ 'role' est dans la table users
     ];
 
     /**

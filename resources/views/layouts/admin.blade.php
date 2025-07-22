@@ -9,6 +9,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>AgoraWrite</title>
   <!-- General CSS Files -->
+   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset(('assets/css/app.min.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/bootstrap-social/bootstrap-social.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/owlcarousel2/dist/assets/owl.carousel.min.css'))}}">
@@ -148,7 +149,7 @@
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello {{ Auth::user()->name }}</div>
-              <a href="/profile" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
+              <a href="/admin/profile" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
               </a><a href="/profile" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
                 Settings
               </a>

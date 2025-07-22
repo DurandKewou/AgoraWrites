@@ -32,8 +32,7 @@
                 <div class="text-center">
                   <div class="author-box-description">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur voluptatum alias molestias
-                      minus quod dignissimos.
+                      {!!AUth::user()->role ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'!!}
                     </p>
                   </div>
                   <div class="mb-2 mt-3">
@@ -66,7 +65,8 @@
                       Birthday
                     </span>
                     <span class="float-right text-muted">
-                      30-05-1998
+                      {{ Auth::user()->birthdate ?? '30-05-1998' }} <!-- Assuming birthdate is stored in the user model -->
+                      <!-- If not, you can replace it with a default value -->
                     </span>
                   </p>
                   <p class="clearfix">
@@ -74,7 +74,8 @@
                       Phone
                     </span>
                     <span class="float-right text-muted">
-                      (0123)123456789
+                      {{ Auth::user()->phone ?? '(0237) 693456789' }} <!-- Assuming phone is stored in the user model -->
+                      <!-- If not, you can replace it with a default value -->
                     </span>
                   </p>
                   <p class="clearfix">
@@ -168,7 +169,9 @@
                       <div class="col-md-3 col-6 b-r">
                         <strong>Mobile</strong>
                         <br>
-                        <p class="text-muted">(123) 456 7890</p>
+                        <p class="text-muted">
+                          {{ Auth::user()->phone ?? '(237) 6 9647 7890' }} <!-- Assuming phone is stored in the user model -->
+                          <!-- If not, you can replace it with a default value --></p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Email</strong>
@@ -178,7 +181,13 @@
                       <div class="col-md-3 col-6">
                         <strong>Location</strong>
                         <br>
-                        <p class="text-muted">India</p>
+                        <p class="text-muted">
+                             {{ Auth::user()->city ?? 'Adresse non définie' }}
+                              {{ Auth::user()->country }}
+                              {{ Auth::user()->postal_code  }}
+                              {{ Auth::user()->address  }}
+                          
+                        </p>
                       </div>
                     </div>
                     <p class="m-t-30">Completed my graduation in Arts from the well known and
@@ -229,7 +238,10 @@
                     </ul>
                   </div>
                   <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="profile-tab2">
-                    <form method="post" class="needs-validation">
+                    <form action="{{ route('author.updateProfile') }}" method="post" class="needs-validation">
+                      @csrf
+                      @method('PUT')
+
                       <div class="card-header">
                         <h4>Edit Profile</h4>
                       </div>
@@ -237,14 +249,14 @@
                         <div class="row">
                           <div class="form-group col-md-6 col-12">
                             <label>First Name</label>
-                            <input type="text" class="form-control" value="{{ Auth::user()->name }}">
+                            <input type="text" name="name" class="form-control" value="{{ Auth::user()->name }}">
                             <div class="invalid-feedback">
                               Please fill in the first name
                             </div>
                           </div>
                           <div class="form-group col-md-6 col-12">
                             <label>Last Name</label>
-                            <input type="text" class="form-control" value="{{ Auth::user()->surname }}">
+                            <input type="text" name="surname" class="form-control" value="{{ Auth::user()->surname }}">
                             <div class="invalid-feedback">
                               Please fill in the last name
                             </div>
@@ -253,21 +265,67 @@
                         <div class="row">
                           <div class="form-group col-md-7 col-12">
                             <label>Email</label>
-                            <input type="email" class="form-control" value="{{ Auth::user()->email }}">
+                            <input type="email" name="email" class="form-control" value="{{ Auth::user()->email }}">
                             <div class="invalid-feedback">
                               Please fill in the email
                             </div>
                           </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-md-7 col-md-12">
+                            <label for="phone">Phone</label>
+                            <input type="tel" name="phone" class="form-control" placeholder="Ex: +237612345678"
+                                  value="{{ old('phone', Auth::user()->phone) }}">
+                            <div class="invalid-feedback">
+                                Please fill in the phone number
+                            </div>
+                        </div>
+
+                        </div>
+
+                        <div class="row">
+                          <div class="form-group col-md-6 col-12">
+                            <label>Birthdate</label>
+                            <input type="date" name="birthdate" class="form-control" value="{{ Auth::user()->birthdate }}" placeholder="Birthdate">
+                            <div class="invalid-feedback">
+                              Please fill in the Birthdate
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-md-7 col-12">
+                            <label>City</label>
+                            <input type="text" name="city" class="form-control" value="{{ Auth::user()->city }}" placeholder="City">
+                            <div class="invalid-feedback">
+                              Please fill in the City
+                            </div>
+                          </div>
                           <div class="form-group col-md-5 col-12">
-                            <label>Phone</label>
-                            <input type="tel" class="form-control" value="">
+                            <label>Country</label>
+                            <input type="text" name="country"  class="form-control" value="{{ Auth::user()->country}}"placeholder="Country">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-md-6 col-12">
+                            <label>Postal Code</label>
+                            <input type="text" name="postal_code" class="form-control" value="{{ Auth::user()->postal_code }}" placeholder="Postal Code">
+                            <div class="invalid-feedback">
+                              Please fill in the Postal Code
+                            </div>
+                          </div>
+                          <div class="form-group col-md-6 col-12">
+                            <label>Address</label>
+                            <input type="text" name="address" class="form-control" value="{{ Auth::user()->address }}" placeholder="Address">
+                            <div class="invalid-feedback">
+                              Please fill in the Address
+                            </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="form-group col-12">
-                            <label>Bio</label>
+                            <label>Bio(Role)</label>
                             <textarea
-                              class="form-control summernote-simple">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur voluptatum alias molestias minus quod dignissimos.</textarea>
+                              class="form-control summernote-simple" name="role">{{ old('role', Auth::user()->role) }}</textarea>
                           </div>
                         </div>
                         <div class="row">

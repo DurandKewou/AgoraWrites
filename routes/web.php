@@ -24,8 +24,8 @@ Route::post('/forgot-password',[UserController::class,'userForgotPassword'])->na
 Route::get('/reset-password/{email}',[UserController::class,'loadResetPassword'])->name('reset-password');
 Route::post('/',[UserController::class,'userResetPassword'])->name('userResetPassword');
 
-    Route::get('/post/access/{id}', [PostController::class, 'access'])->name('post.access');
-    Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->middleware('auth');
+Route::get('/post/access/{id}', [PostController::class, 'access'])->name('post.access');
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show')->middleware('auth');
 
 /**
  * =====================
@@ -33,8 +33,9 @@ Route::post('/',[UserController::class,'userResetPassword'])->name('userResetPas
  * =====================
  */
 Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/', [AdminController::class, 'showUser'])->name('showUser');
     Route::get('/profile',[AdminController::class,'profile'])->name('admin.profile');
+    Route::put('/profile/update', [AdminController::class, 'updateProfile'])->name('updateProfile');
     Route::get('/editAuthor',[AdminController::class,'editAuthor']);
     Route::get('/editReader',[AdminController::class,'editReader']);
     Route::get('/categorie',[CategoryController::class,'index'])->name('categorie');
@@ -56,6 +57,8 @@ Route::middleware(['auth', 'role:Author'])->prefix('author')->name('author.')->g
     Route::delete('/author/delete/{id}', [AuthorController::class,'destroy'])->name('delete');
 
     Route::get('/profile',[AuthorController::class,'profile'])->name('author.profile');
+    Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('updateProfile');
+
     
 });
 

@@ -9,6 +9,10 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>AgoraWrite</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- intl-tel-input CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css" />
+
+
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset(('assets/css/app.min.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/bootstrap-social/bootstrap-social.css'))}}">
@@ -149,7 +153,7 @@
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello {{ Auth::user()->name }}</div>
-              <a href="/profile" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
+              <a href="/author/profile" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
               </a><a href="/profile" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
                 Settings
               </a>
@@ -315,6 +319,12 @@
   <script src="{{asset(('assets/js/scripts.js'))}}"></script>
   <!-- Custom JS File -->
   <script src="{{asset(('assets/js/custom.js'))}}"></script>
+  <!-- intl-tel-input JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+
+
+
 
 </body>
 

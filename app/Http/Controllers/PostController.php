@@ -29,7 +29,7 @@ class PostController extends Controller
     public function postAdmin()
     {
         $posts = Post::all();
-        return view('admin.post', compact('posts'));
+        return view('admin.index', compact('posts'));
     }
 
     /**

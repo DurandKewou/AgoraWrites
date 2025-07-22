@@ -34,18 +34,28 @@ class UserController extends Controller
 
     public function userRegister(Request $request)
     {
+        //dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|exists:roles,name', // rôle obligatoire et limité à ces deux choix
+            'description' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:100',
+            'country' => 'nullable|string|max:100',
+            'postal_code' => 'nullable|string|max:20',
+            'birthdate' => 'nullable|date',
+            
         ]);
 
         $user = new User();
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
+        $user->role = $request->description; // Assigner la description si nécessaire
         $user->email_verified_at = now();
         $user->password = Hash::make($request->password);
         $user->save();
@@ -164,10 +174,45 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateProfile(Request $request)
     {
-        //
+        //dd($request->all());
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'surname'     => 'required|string|max:255',
+            'email'       => 'required|email|max:255|unique:users,email,' . auth()->id(),
+            'role'        => 'nullable|string',
+            'phone'  => 'nullable|string|max:20', // récupéré depuis JS
+            'address'     => 'nullable|string|max:255',
+            'city'        => 'nullable|string|max:100',
+            'country'     => 'nullable|string|max:100',
+            'postal_code' => 'nullable|string|max:20',
+            'birthdate'   => 'nullable|date',
+        ]);
+
+        $user = auth()->user();
+
+        $user->update([
+            'name'        => $request->name,
+            'surname'     => $request->surname,
+            'email'       => $request->email,
+            'role'        => $request->role, // Assigner la description si nécessaire
+            'email_verified_at' => now(),
+            'password'    => $user->password, // Ne pas changer le mot de passe
+            'remember_token' => $user->remember_token, // Ne pas changer le token de session
+            'phone' => $request->phone,// numéro complet ici
+            'address'     => $request->address,
+            'city'        => $request->city,
+            'country'     => $request->country,
+            'postal_code' => $request->postal_code,
+            'birthdate'   => $request->birthdate,
+        ]);
+
+        return redirect()->back()->with('success', 'Profil mis à jour avec succès.');
     }
+
+
+
 
     /**
      * Remove the specified resource from storage.

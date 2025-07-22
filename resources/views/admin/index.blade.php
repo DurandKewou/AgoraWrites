@@ -13,90 +13,30 @@
 @endsection
 
 @section('space-work')
-  <!-- Main Content -->
+
   <div class="main-content">
     <section class="section">
       <div class="section-body">
-        <div class="row">
-          <div class="">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between align-items-center">
-                <h4>Task Details</h4>
-                <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                  <i class="fas fa-plus"></i> Add</button>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-striped">
-                    <tr>
-                      <th class="pt-2">
-                        <div class="custom-checkbox custom-checkbox-table custom-control">
-                          <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                            class="custom-control-input" id="checkbox-all">
-                          <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                        </div>
-                      </th>
-                      <th>Name</th>
-                      <th>Surname</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                      <th>Permission</th>
-                      <th>Status</th>
-                    </tr>
-                    <tr>
-                      @if (count($users) > 0)
-                          @foreach ($users as $user)
-                              <tr>
-                                  <td>{{ $loop->iteration }}</td>
-                                  <td>{{ $user->name }}</td>
-                                  <td>{{ $user->surname }}</td>
-                                  <td>{{ $user->email }}</td>
-                                  {{-- Affichage des rôles --}}
-                                  <td>
-                                      @if($user->roles->isNotEmpty())
-                                          {{ $user->getRoleNames()->join(', ') }}
-                                      @else
-                                          <span class="text-muted">Aucun rôle</span>
-                                      @endif
-                                  </td>
-
-                                  {{-- Affichage des permissions --}}
-                                  <td>
-                                      @if($user->permissions->isNotEmpty())
-                                          {{ $user->getPermissionNames()->join(', ') }}
-                                      @else
-                                          <span class="text-muted">Aucune permission</span>
-                                      @endif
-                                  </td>
-
-                                  <td id="outer" class="d-flex justify-content-center align-items-center">
-
-                                    <a href=""  class="inner m-2 btn btn-sm btn-success" >View</a>
-                                    <a class="inner m-2 btn btn-sm btn-info" href="">Edit</a>
-                                    <form method="post" action="" class="inner">
-
-                                      @method('DELETE')
-                                      @csrf
-                                      <input type="hidden" name="todo_id" value="{{ $user->id }}">
-                                      <input type="submit" class="btn btn-sm btn-danger" value="Delete">
-                                    </form>
-                                  </td>
-                                  
-                              </tr>
-                            </tr>
-                          @endforeach
-                      @else
-                          <tr>
-                              <td colspan="6">User not Found!</td>
-                          </tr>
-                      @endif
-                    </tr>
-                  </table>
-                </div>
-              </div>
+            <div class="row">
+                @foreach ($posts as $post)
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <article class="article">
+                                <div class="article-header">
+                                    <div class="article-image" style="height:250px; background-size:cover; background-position:center; background-image: url('{{ asset('storage/' . $post->image) }}');"></div>
+                                    <div class="article-title">
+                                        <h2><a href="{{ route('post.access', $post->id) }}">{{ $post->title }}</a></h2>
+                                    </div>
+                                </div>
+                                <div class="article-details">
+                                    <p>{!! Str::limit(strip_tags($post->content), 150) !!}</p>
+                                    <div class="article-cta">
+                                        <a href="{{ route('post.access', $post->id) }}" class="btn btn-primary">Lire la suite</a>
+                                    </div>
+                                </div>
+                            </article>
+                    </div>
+                @endforeach
             </div>
-          </div>
-        </div>
       </div>
     </section>
   </div>

@@ -14,13 +14,14 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function showUser()
     {
         // Récupérer tous les utilisateurs sauf ceux ayant le rôle "Admin"
         $users = User::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'Admin');
         })->with('roles', 'permissions')->get(); // Récupérer tous les utilisateurs
-        return view('admin.index', compact('users')); // Passer les utilisateurs à la vue
+        $roles = Role::all(); // Récupérer tous les rôles disponibles
+        return view('admin.allUser', compact('users','roles')); // Passer les utilisateurs à la vue
     }
     /**
      * Show the profile of the authenticated user.
@@ -29,6 +30,42 @@ class AdminController extends Controller
     {
         $user = Auth::user(); // Récupérer l'utilisateur authentifié
         return view('admin.profile', compact('user')); // Passer l'utilisateur à la vue
+    }
+       public function updateProfile(Request $request)
+    {
+        //dd($request->all());
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'surname'     => 'required|string|max:255',
+            'email'       => 'required|email|max:255|unique:users,email,' . auth()->id(),
+            'role'        => 'nullable|string',
+            'phone'  => 'nullable|string|max:20', // récupéré depuis JS
+            'address'     => 'nullable|string|max:255',
+            'city'        => 'nullable|string|max:100',
+            'country'     => 'nullable|string|max:100',
+            'postal_code' => 'nullable|string|max:20',
+            'birthdate'   => 'nullable|date',
+        ]);
+
+        $user = auth()->user();
+
+        $user->update([
+            'name'        => $request->name,
+            'surname'     => $request->surname,
+            'email'       => $request->email,
+            'role'        => $request->role, // Assigner la description si nécessaire
+            'email_verified_at' => now(),
+            'password'    => $user->password, // Ne pas changer le mot de passe
+            'remember_token' => $user->remember_token, // Ne pas changer le token de session
+            'phone' => $request->phone,// numéro complet ici
+            'address'     => $request->address,
+            'city'        => $request->city,
+            'country'     => $request->country,
+            'postal_code' => $request->postal_code,
+            'birthdate'   => $request->birthdate,
+        ]);
+
+        return redirect()->back()->with('success', 'Profil mis à jour avec succès.');
     }
 
     public function editAuthor()
@@ -98,6 +135,6 @@ class AdminController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        return redirect()->route('admin.index')->with('success', 'Article supprimé avec succès.');
+        return redirect()->route('admin.allUser')->with('success', 'Article supprimé avec succès.');
     }
 }
