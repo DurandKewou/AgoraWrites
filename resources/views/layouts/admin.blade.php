@@ -9,6 +9,10 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>AgoraWrite</title>
   <!-- General CSS Files -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset(('assets/css/app.min.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/bootstrap-social/bootstrap-social.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/owlcarousel2/dist/assets/owl.carousel.min.css'))}}">
@@ -148,7 +152,7 @@
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello {{ Auth::user()->name }}</div>
-              <a href="/profile" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
+              <a href="/admin/profile" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
               </a><a href="/profile" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
                 Settings
               </a>
@@ -187,7 +191,8 @@
                   data-feather="briefcase"></i><span>Post Manager</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="/admin/categorie">Categories</a></li>
-                <li><a class="nav-link" href="/admin/post">All Post</a></li>
+                <li><a class="nav-link" href="/admin/postlist">All Post</a></li>
+                <li><a class="nav-link" href="/admin/post">View Post</a></li>
               </ul>
             </li>
             <li class="menu-header">Setting</li>
@@ -311,8 +316,28 @@
     </div>
   </div>
 
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const toggleBtn = document.getElementById('toggle-comments');
+          const moreComments = document.getElementById('more-comments');
+
+          if (toggleBtn && moreComments) {
+              toggleBtn.addEventListener('click', function () {
+                  const isVisible = moreComments.style.display === 'block';
+                  moreComments.style.display = isVisible ? 'none' : 'block';
+                  toggleBtn.innerHTML = isVisible 
+                      ? '<i class="fas fa-chevron-down"></i> Voir plus' 
+                      : '<i class="fas fa-chevron-up"></i> Réduire';
+              });
+          }
+      });
+  </script>
+
   <!-- General JS Scripts -->
   <script src="{{asset(('assets/js/app.min.js'))}}"></script>
+  <!-- Bootstrap JS Bundle (nécessaire pour les modales) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
   <!-- JS Libraies -->
   <script src="{{asset(('assets/bundles/chartjs/chart.min.js'))}}"></script>
   <script src="{{asset(('assets/bundles/owlcarousel2/dist/owl.carousel.min.js'))}}"></script>
