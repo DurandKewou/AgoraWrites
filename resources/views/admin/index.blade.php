@@ -15,11 +15,11 @@
 @section('space-work')
 
   <div class="main-content">
-    <section class="section">
-      <div class="section-body">
-            <div class="row">
-                @foreach ($posts as $post)
-                    <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+        <section class="section">
+            <div class="section-body">
+                <div class="row">
+                    @foreach ($posts as $post)
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                             <article class="article">
                                 <div class="article-header">
                                     <div class="article-image" style="height:250px; background-size:cover; background-position:center; background-image: url('{{ asset('storage/' . $post->image) }}');"></div>
@@ -34,11 +34,11 @@
                                     </div>
                                 </div>
                             </article>
-                    </div>
-                @endforeach
+                        </div>
+                    @endforeach
+                </div>
             </div>
-      </div>
-    </section>
+        </section>
   </div>
 
 @endsection

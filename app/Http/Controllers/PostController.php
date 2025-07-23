@@ -32,6 +32,12 @@ class PostController extends Controller
         return view('admin.index', compact('posts'));
     }
 
+    public function allPost()
+    {
+        $posts = Post::all();
+        return view('admin.post', compact('posts'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -115,9 +121,29 @@ class PostController extends Controller
         }
 
         $post = Post::findOrFail($id);
+        $user = Auth::user();
+        
 
-        // Exemple : route vers le tableau de bord ou l'article
-        return redirect()->route('dashboard')->with('post_id', $id);
+        if ($user->hasRole('Admin')) {
+            return redirect()->route('showPost', ['id' => $id]);
+        }
+
+        if ($user->hasRole(['Auteur', 'Author'])) {
+            return redirect()->route('showPost', ['id' => $id]);
+        }
+
+        if ($user->hasRole(['Lecteur', 'Reader'])) {
+            return redirect()->route('reader.index')->with('message', 'Redirection vers le tableau de bord Lecteur.');
+        }
+
+        // Fallback
+        return redirect()->back()->with('message', 'Redirection par défaut.');
+    }
+
+    public function showPost($id)
+    {
+        $post = Post::with(['category', 'tags', 'user', 'comments.user'])->findOrFail($id);
+        return view('admin.showPost', compact('post'));
     }
 
     /**

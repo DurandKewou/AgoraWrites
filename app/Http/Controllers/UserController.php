@@ -90,7 +90,7 @@ class UserController extends Controller
 
             // Rediriger selon le rôle attribué via Spatie
             if ($user->hasRole('Admin')) {
-                return redirect()->route('admin.index');
+                return redirect()->route('admin.allUser');
             } elseif ($user->hasRole('Author')) {
                 return redirect()->route('author.index');
             } elseif ($user->hasRole('Lecteur')) {

@@ -135,6 +135,6 @@ class AdminController extends Controller
         $post = Post::findOrFail($id);
         $post->delete();
 
-        return redirect()->route('admin.allUser')->with('success', 'Article supprimé avec succès.');
+        return redirect()->route('admin.allUser')->with('success', 'Utilisateur supprimé avec succès.');
     }
 }
