@@ -18,10 +18,11 @@ class AdminController extends Controller
     {
         // Récupérer tous les utilisateurs sauf ceux ayant le rôle "Admin"
         $users = User::whereDoesntHave('roles', function ($query) {
-            $query->where('name', 'Admin');
+            $query->where('name', 'Admi');
         })->with('roles', 'permissions')->get(); // Récupérer tous les utilisateurs
+        $allUsers = User::all();
         $roles = Role::all(); // Récupérer tous les rôles disponibles
-        return view('admin.allUser', compact('users','roles')); // Passer les utilisateurs à la vue
+        return view('admin.allUser', compact('users','roles','allUsers')); // Passer les utilisateurs à la vue
     }
     /**
      * Show the profile of the authenticated user.
@@ -89,6 +90,23 @@ class AdminController extends Controller
         })->with('roles', 'permissions')->get();
         return view('admin.editReader',compact('users'));
     }
+
+    public function approvePost($id) {
+        $post = Post::findOrFail($id);
+        $post->status = 'approved';
+        $post->save();
+
+        return redirect()->back()->with('success', 'Post approuvé');
+    }
+    public function rejectPost($id) {
+        $post = Post::findOrFail($id);
+        $post->status = 'rejected';
+        $post->save();
+
+        return redirect()->back()->with('success', 'Post rejeté');
+    }
+    
+
 
     /**
      * Store a newly created resource in storage.

@@ -87,7 +87,9 @@
                           @endforeach
                       @else
                           <tr>
-                              <td colspan="6">User not Found!</td>
+                              <div class="alert alert-warning">
+                                <p>User not Found!</p>
+                              </div>
                           </tr>
                       @endif
                     </tr>

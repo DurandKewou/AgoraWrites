@@ -72,7 +72,7 @@
                         <p>Aucun commentaire pour cet article.</p>
                     @else
                         <ul class="list-group mb-3">
-                            @foreach($post->comments->take(3) as $comment)
+                            @foreach($post->comments->take(2) as $comment)
                                 <li class="list-group-item">
                                     <div class="d-flex justify-content-between">
                                         <div>
@@ -99,7 +99,7 @@
 
                             <!-- 🔽 Commentaires cachés -->
                             <div id="more-comments" style="display: none;">
-                                @foreach($post->comments->slice(3) as $comment)
+                                @foreach($post->comments->slice(2) as $comment)
                                     <li class="list-group-item">
                                         <div class="d-flex justify-content-between">
                                             <div>

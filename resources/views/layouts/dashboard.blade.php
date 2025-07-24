@@ -7,8 +7,12 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Todo</title>
+  <title>AgoraWrite</title>
   <!-- General CSS Files -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset(('assets/css/app.min.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/bootstrap-social/bootstrap-social.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/owlcarousel2/dist/assets/owl.carousel.min.css'))}}">
@@ -148,14 +152,12 @@
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
             <div class="dropdown-menu dropdown-menu-right pullDown">
               <div class="dropdown-title">Hello {{ Auth::user()->name }}</div>
-              <a href="profile.html" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
-              </a> <a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                Activities
-              </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
+              <a href="/reader/profil" class="dropdown-item has-icon"> <i class="far fa-user"></i> Profile
+              </a><a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
                 Settings
               </a>
               <div class="dropdown-divider"></div>
-              <a href="auth-login.html" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
+              <a href="/login" class="dropdown-item has-icon text-danger"> <i class="fas fa-sign-out-alt"></i>
                 Logout
               </a>
             </div>
@@ -166,7 +168,7 @@
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
             <a href="index.html"> <img alt="image" src="{{asset(('assets/img/logo.png'))}}" class="header-logo" /> <span
-                class="logo-name">Todo</span>
+                class="logo-name">AgoraWrite</span>
             </a>
           </div>
           <ul class="sidebar-menu">
@@ -176,10 +178,10 @@
             </li>
             <li class="dropdown active">
               <a href="#" class="menu-toggle nav-link has-dropdown"><i
-                  data-feather="briefcase"></i><span>Widgets</span></a>
+                  data-feather="briefcase"></i><span>Manager</span></a>
               <ul class="dropdown-menu">
-                <li><a class="nav-link" href="widget-chart.html">Chart Widgets</a></li>
-                <li class="active"><a class="nav-link" href="widget-data.html">Data Widgets</a></li>
+                <li><a class="nav-link" href="">Favoris</a></li>
+                <li class="active"><a class="nav-link" href="">Data Widgets</a></li>
               </ul>
             </li>
           </ul>
@@ -188,97 +190,97 @@
 
          @yield('space-work')
      
-        <div class="settingSidebar">
-          <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
-          </a>
-          <div class="settingSidebar-body ps-container ps-theme-default">
-            <div class=" fade show active">
-              <div class="setting-panel-header">Setting Panel
+      <div class="settingSidebar">
+        <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
+        </a>
+        <div class="settingSidebar-body ps-container ps-theme-default">
+          <div class=" fade show active">
+            <div class="setting-panel-header">Setting Panel
+            </div>
+            <div class="p-15 border-bottom">
+              <h6 class="font-medium m-b-10">Select Layout</h6>
+              <div class="selectgroup layout-color w-50">
+                <label class="selectgroup-item">
+                  <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
+                  <span class="selectgroup-button">Light</span>
+                </label>
+                <label class="selectgroup-item">
+                  <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
+                  <span class="selectgroup-button">Dark</span>
+                </label>
               </div>
-              <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Select Layout</h6>
-                <div class="selectgroup layout-color w-50">
-                  <label class="selectgroup-item">
-                    <input type="radio" name="value" value="1" class="selectgroup-input-radio select-layout" checked>
-                    <span class="selectgroup-button">Light</span>
-                  </label>
-                  <label class="selectgroup-item">
-                    <input type="radio" name="value" value="2" class="selectgroup-input-radio select-layout">
-                    <span class="selectgroup-button">Dark</span>
-                  </label>
-                </div>
+            </div>
+            <div class="p-15 border-bottom">
+              <h6 class="font-medium m-b-10">Sidebar Color</h6>
+              <div class="selectgroup selectgroup-pills sidebar-color">
+                <label class="selectgroup-item">
+                  <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
+                  <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
+                    data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
+                </label>
+                <label class="selectgroup-item">
+                  <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
+                  <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
+                    data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
+                </label>
               </div>
-              <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Sidebar Color</h6>
-                <div class="selectgroup selectgroup-pills sidebar-color">
-                  <label class="selectgroup-item">
-                    <input type="radio" name="icon-input" value="1" class="selectgroup-input select-sidebar">
-                    <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                      data-original-title="Light Sidebar"><i class="fas fa-sun"></i></span>
-                  </label>
-                  <label class="selectgroup-item">
-                    <input type="radio" name="icon-input" value="2" class="selectgroup-input select-sidebar" checked>
-                    <span class="selectgroup-button selectgroup-button-icon" data-toggle="tooltip"
-                      data-original-title="Dark Sidebar"><i class="fas fa-moon"></i></span>
-                  </label>
-                </div>
+            </div>
+            <div class="p-15 border-bottom">
+              <h6 class="font-medium m-b-10">Color Theme</h6>
+              <div class="theme-setting-options">
+                <ul class="choose-theme list-unstyled mb-0">
+                  <li title="white" class="active">
+                    <div class="white"></div>
+                  </li>
+                  <li title="cyan">
+                    <div class="cyan"></div>
+                  </li>
+                  <li title="black">
+                    <div class="black"></div>
+                  </li>
+                  <li title="purple">
+                    <div class="purple"></div>
+                  </li>
+                  <li title="orange">
+                    <div class="orange"></div>
+                  </li>
+                  <li title="green">
+                    <div class="green"></div>
+                  </li>
+                  <li title="red">
+                    <div class="red"></div>
+                  </li>
+                </ul>
               </div>
-              <div class="p-15 border-bottom">
-                <h6 class="font-medium m-b-10">Color Theme</h6>
-                <div class="theme-setting-options">
-                  <ul class="choose-theme list-unstyled mb-0">
-                    <li title="white" class="active">
-                      <div class="white"></div>
-                    </li>
-                    <li title="cyan">
-                      <div class="cyan"></div>
-                    </li>
-                    <li title="black">
-                      <div class="black"></div>
-                    </li>
-                    <li title="purple">
-                      <div class="purple"></div>
-                    </li>
-                    <li title="orange">
-                      <div class="orange"></div>
-                    </li>
-                    <li title="green">
-                      <div class="green"></div>
-                    </li>
-                    <li title="red">
-                      <div class="red"></div>
-                    </li>
-                  </ul>
-                </div>
+            </div>
+            <div class="p-15 border-bottom">
+              <div class="theme-setting-options">
+                <label class="m-b-0">
+                  <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                    id="mini_sidebar_setting">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="control-label p-l-10">Mini Sidebar</span>
+                </label>
               </div>
-              <div class="p-15 border-bottom">
-                <div class="theme-setting-options">
-                  <label class="m-b-0">
-                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                      id="mini_sidebar_setting">
-                    <span class="custom-switch-indicator"></span>
-                    <span class="control-label p-l-10">Mini Sidebar</span>
-                  </label>
-                </div>
+            </div>
+            <div class="p-15 border-bottom">
+              <div class="theme-setting-options">
+                <label class="m-b-0">
+                  <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
+                    id="sticky_header_setting">
+                  <span class="custom-switch-indicator"></span>
+                  <span class="control-label p-l-10">Sticky Header</span>
+                </label>
               </div>
-              <div class="p-15 border-bottom">
-                <div class="theme-setting-options">
-                  <label class="m-b-0">
-                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input"
-                      id="sticky_header_setting">
-                    <span class="custom-switch-indicator"></span>
-                    <span class="control-label p-l-10">Sticky Header</span>
-                  </label>
-                </div>
-              </div>
-              <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
-                <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
-                  <i class="fas fa-undo"></i> Restore Default
-                </a>
-              </div>
+            </div>
+            <div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
+              <a href="#" class="btn btn-icon icon-left btn-primary btn-restore-theme">
+                <i class="fas fa-undo"></i> Restore Default
+              </a>
             </div>
           </div>
         </div>
+      </div>
       </div>
       <footer class="main-footer">
         <div class="footer-left">
@@ -290,8 +292,28 @@
     </div>
   </div>
 
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const toggleBtn = document.getElementById('toggle-comments');
+          const moreComments = document.getElementById('more-comments');
+
+          if (toggleBtn && moreComments) {
+              toggleBtn.addEventListener('click', function () {
+                  const isVisible = moreComments.style.display === 'block';
+                  moreComments.style.display = isVisible ? 'none' : 'block';
+                  toggleBtn.innerHTML = isVisible 
+                      ? '<i class="fas fa-chevron-down"></i> Voir plus' 
+                      : '<i class="fas fa-chevron-up"></i> Réduire';
+              });
+          }
+      });
+  </script>
+
   <!-- General JS Scripts -->
   <script src="{{asset(('assets/js/app.min.js'))}}"></script>
+  <!-- Bootstrap JS Bundle (nécessaire pour les modales) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
   <!-- JS Libraies -->
   <script src="{{asset(('assets/bundles/chartjs/chart.min.js'))}}"></script>
   <script src="{{asset(('assets/bundles/owlcarousel2/dist/owl.carousel.min.js'))}}"></script>
@@ -305,6 +327,4 @@
 
 </body>
 
-
-<!-- widget-data.html  21 Nov 2019 03:50:11 GMT -->
 </html>

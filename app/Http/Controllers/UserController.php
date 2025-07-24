@@ -211,6 +211,26 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profil mis à jour avec succès.');
     }
 
+    public function updateRole(Request $request, $id)
+    {
+        $request->validate([
+            'role' => 'required|exists:roles,name'  // Le nom doit exister dans la table `roles`
+        ]);
+
+        $user = User::findOrFail($id);
+
+        // Attribuer le rôle (et retirer les anciens si besoin)
+        $user->syncRoles([$request->role]);
+
+        // Récupérer les permissions liées à ce rôle
+        $role = Role::where('name', $request->role)->first();
+        $permissions = $role->permissions;
+
+        // Attribuer les permissions directement à l'utilisateur
+        $user->syncPermissions($permissions);
+
+        return redirect()->back()->with('success', 'Rôle mis à jour avec succès.');
+    }
 
 
 
@@ -219,6 +239,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back()->with('success', 'Utilisateur supprimé avec succès.');
         //
     }
 }

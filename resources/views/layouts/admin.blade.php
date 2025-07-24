@@ -191,6 +191,7 @@
                   data-feather="briefcase"></i><span>Post Manager</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="/admin/categorie">Categories</a></li>
+                <li><a class="nav-link" href="/admin/showComment">Comments</a></li>
                 <li><a class="nav-link" href="/admin/postlist">All Post</a></li>
                 <li><a class="nav-link" href="/admin/post">View Post</a></li>
               </ul>
@@ -351,6 +352,4 @@
 
 </body>
 
-
-<!-- widget-data.html  21 Nov 2019 03:50:11 GMT -->
 </html>

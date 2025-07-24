@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('image')->nullable();
-            $table->enum('status', ['draft', 'published'])->default('draft');
+            $table->enum('status', ['pending', 'published', 'rejected'])->default('pending');
             $table->unsignedBigInteger('views')->default(0);
             $table->timestamps();
         });

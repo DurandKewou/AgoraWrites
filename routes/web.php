@@ -11,6 +11,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
+use Dom\Comment;
 
 Route::get('/', [PostController::class, 'index']);
 
@@ -52,6 +53,7 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/profile/update', [AdminController::class, 'updateProfile'])->name('updateProfile');
     Route::get('/editAuthor',[AdminController::class,'editAuthor']);
     Route::get('/editReader',[AdminController::class,'editReader']);
+    
     Route::get('/categorie',[CategoryController::class,'index'])->name('categorie');
     Route::post('/categorie',[CategoryController::class,'createCategorie'])->name('createCategorie');
     Route::get('/post', [PostController::class,'allPost'])->name('index');
@@ -61,8 +63,14 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/post/update/{id}', [PostController::class,'update'])->name('update');
     Route::delete('/post/delete/{id}', [PostController::class,'destroy'])->name('delete');
     Route::get('/postlist', [PostController::class,'postAdmin']);
+    Route::get('/posts/{id}', [PostController::class, 'showPostAdmin'])->name('showPost');
+    Route::get('/showComment', [CommentController::class,'showComment']);
+    Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/allUser', [AdminController::class, 'showUser'])->name('allUser');
+    Route::get('/editUser/{id}', [AdminController::class, 'editUser'])->name('edit');
+    Route::put('/updateUser/{id}', [UserController::class, 'updateRole'])->name('updateRole');
+    Route::delete('/deleteUser/{id}', [UserController::class, 'destroy'])->name('deleteUser');
     Route::get('/edit/{id}', [AdminController::class,'edit'])->name('edit');
     Route::put('/update/{id}', [AdminController::class,'update'])->name('update');
     Route::get('/edit/{id}', [AuthorController::class,'edit'])->name('edit');
@@ -75,6 +83,7 @@ Route::middleware(['auth', 'role:Author'])->prefix('author')->name('author.')->g
     Route::get('/createPost', [AuthorController::class,'create'])->name('create');
     Route::post('/index', [PostController::class,'SavePost'])->name('SavePost');
     Route::get('/post', [AuthorController::class,'postAuthor'])->name('post');
+    Route::get('/posts/{id}', [PostController::class, 'showPostAuthor'])->name('showPost');
     Route::get('/edit/{id}', [AuthorController::class,'edit'])->name('edit');
     Route::put('update/{id}', [AuthorController::class,'update'])->name('update');
     Route::delete('/author/delete/{id}', [AuthorController::class,'destroy'])->name('delete');
@@ -86,8 +95,8 @@ Route::middleware(['auth', 'role:Author'])->prefix('author')->name('author.')->g
 });
 
 // Assuming you have a ReaderController for reader functionalities
-Route::middleware(['auth','role:Reader'])->prefix('reader')->name('reader.')->group(function(){
-    Route::get('/reader/index', [ReaderController::class,'index'])->name('reader.index');
+Route::middleware(['auth','role:Lecteur'])->prefix('reader')->name('reader.')->group(function(){
+    Route::get('/index', [ReaderController::class,'index'])->name('index');
     Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/post/access/{id}', [PostController::class, 'access'])->name('post.access');
 });
