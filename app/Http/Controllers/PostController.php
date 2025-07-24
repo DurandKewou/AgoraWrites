@@ -50,7 +50,7 @@ class PostController extends Controller
             'content' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'status' => 'required|in:published,draft,Pending',
+            'status' => 'nullable|in:published,rejected,pending',
             'tags' => 'nullable|string', // Tags sous forme de texte
         ]);
 
@@ -68,7 +68,7 @@ class PostController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'image' => $imagePath,
-            'status' => $request->status, // ou 'publié' selon ta logique
+            'status' => 'pending', // ou 'publié' selon ta logique
             'views' => 0,
         ]);
 
@@ -125,25 +125,48 @@ class PostController extends Controller
         
 
         if ($user->hasRole('Admin')) {
-            return redirect()->route('showPost', ['id' => $id]);
+            return redirect()->route('admin.showPost', ['id' => $id]);
         }
 
         if ($user->hasRole(['Auteur', 'Author'])) {
-            return redirect()->route('showPost', ['id' => $id]);
+            return redirect()->route('author.showPost', ['id' => $id]);
         }
 
         if ($user->hasRole(['Lecteur', 'Reader'])) {
-            return redirect()->route('reader.index')->with('message', 'Redirection vers le tableau de bord Lecteur.');
+            return redirect()->route('showPost', ['id' => $id]);
         }
 
         // Fallback
         return redirect()->back()->with('message', 'Redirection par défaut.');
     }
 
-    public function showPost($id)
+    public function showPostAdmin($id)
     {
+            if (!auth()->check()) {
+                return redirect()->route('login')->withErrors(['error' => 'Veuillez vous connecter.']);
+            }
+
         $post = Post::with(['category', 'tags', 'user', 'comments.user'])->findOrFail($id);
         return view('admin.showPost', compact('post'));
+    }
+
+    public function showPostAuthor($id)
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login')->withErrors(['error' => 'Veuillez vous connecter.']);
+        }
+
+        $post = Post::with(['category', 'tags', 'user', 'comments.user'])->findOrFail($id);
+        return view('author.showPost', compact('post'));
+    }
+    public function showPost($id)
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login')->withErrors(['error' => 'Veuillez vous connecter.']);
+        }
+
+        $post = Post::with(['category', 'tags', 'user', 'comments.user'])->findOrFail($id);
+        return view('reader.showPost', compact('post'));
     }
 
     /**

@@ -66,8 +66,8 @@ class CommentController extends Controller
     public function showComment()
     {
         // Récupère tout les commentaire
-        $comment = Comment::all();
-        return view('admin.showComment', compact('comment'));
+        $comments = Comment::with(['user', 'post'])->get();
+        return view('admin.showComment', compact('comments'));
 
     }
 
@@ -90,8 +90,11 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return back()->with('success', 'Commentaire supprimé avec succès.');
     }
 }

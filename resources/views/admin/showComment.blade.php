@@ -1,15 +1,15 @@
 @extends('layouts/admin')
 
 @section('styles')
-<style>
-  #outer{
-    width: auto;
-    text-align: center;
-  }
-  .inner{
-    display: inline-block;
-  }
-</style>
+  <style>
+    #outer{
+      width: auto;
+      text-align: center;
+    }
+    .inner{
+      display: inline-block;
+    }
+  </style>
 @endsection
 
 @section('space-work')
@@ -21,9 +21,7 @@
           <div class="m-5">
             <div class="card m-5">
               <div class="card-header d-flex justify-content-between align-items-center">
-                <h4>Categorie Details</h4>
-                <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                  <i class="fas fa-plus"></i> Add</button>
+                <h4>All Comment</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -36,27 +34,26 @@
                           <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                         </div>
                       </th>
-                      <th>Name</th>
-                      <th>Description</th>
+                      <th>Name of comment</th>
+                      <th>Post comment</th>
+                      <th>Commentaire</th>
                       <th>Status</th>
                     </tr>
                     <tr>
-                      @if (count($categories) > 0)
-                          @foreach ($categories as $categorie)
+                      @if (count($comments) > 0)
+                          @foreach ($comments as $comment)
                               <tr>
                                   <td>{{ $loop->iteration }}</td>
-                                  <td>{{ $categorie->name }}</td>
-                                  <td>{{ $categorie->description }}</td>
+                                  <td>{{ $comment->user->name ?? 'Utilisateur inconnu' }}</td>
+                                  <td>{{ $comment->post->title ?? 'Post inconnu' }}</td>
+                                  <td>{{ $comment->content }}</td>
 
                                   <td id="outer" class="d-flex justify-content-center align-items-center">
-
-                                    <a href=""  class="inner m-2 btn btn-sm btn-success" >View</a>
-                                    <a class="inner m-2 btn btn-sm btn-info" href="">Edit</a>
-                                    <form method="post" action="" class="inner">
+                                    <form method="post" action="{{ route('admin.comments.destroy', $comment->id) }}" class="inner">
 
                                       @method('DELETE')
                                       @csrf
-                                      <input type="hidden" name="todo_id" value="{{ $categorie->id }}">
+                                      <input type="hidden" name="todo_id" value="{{ $comment->id }}">
                                       <input type="submit" class="btn btn-sm btn-danger" value="Delete">
                                     </form>
                                   </td>

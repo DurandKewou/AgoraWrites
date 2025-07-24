@@ -112,7 +112,9 @@
                           @endforeach
                       @else
                           <tr>
-                              <td colspan="6">Post not Found!</td>
+                            <div class="alert alert-warning">
+                                <p>Post not Found!</p>
+                            </div>
                           </tr>
                           
                       @endif

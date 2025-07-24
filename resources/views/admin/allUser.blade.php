@@ -21,7 +21,7 @@
           <div class="">
             <div class="card">
               <div class="card-header d-flex justify-content-between align-items-center">
-                <h4>Task Details</h4>
+                <h4>Users Details</h4>
                 <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                   <i class="fas fa-plus"></i> Add</button>
               </div>
@@ -72,8 +72,17 @@
                                   <td id="outer" class="d-flex justify-content-center align-items-center">
 
                                     <a href=""  class="inner m-2 btn btn-sm btn-success" >View</a>
-                                    <a class="inner m-2 btn btn-sm btn-info" href="">Edit</a>
-                                    <form method="post" action="" class="inner">
+                                    <a class="inner m-2 btn btn-sm btn-warning" href="javascript:void(0);" data-toggle="modal" 
+                                      data-target="#changeRoleModal-{{ $user->id }}">
+                                      Modifier rôle
+                                    </a>
+
+                                  
+
+                                    
+
+                                    {{-- Form for deleting user --}}
+                                    <form method="post" action="{{ route('admin.deleteUser', $user->id) }}" class="inner">
 
                                       @method('DELETE')
                                       @csrf
@@ -83,11 +92,44 @@
                                   </td>
                                   
                               </tr>
-                            </tr>
+                                <!-- Modal pour modifier le rôle -->
+                              <div class="modal fade" id="changeRoleModal-{{ $user->id }}" tabindex="1" role="dialog" aria-labelledby="changeRoleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <form action="{{ route('admin.updateRole', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="changeRoleModalLabel">Modifier le rôle de {{ $user->name }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div class="form-group">
+                                          <label for="role">Rôle</label>
+                                          <select class="form-control" name="role" required>
+                                            <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                            <option value="Author" {{ $user->role == 'Author' ? 'selected' : '' }}>Auteur</option>
+                                            <option value="Reader" {{ $user->role == 'Reader' ? 'selected' : '' }}>Lecteur</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+
                           @endforeach
                       @else
                           <tr>
-                              <td colspan="6">User not Found!</td>
+                              <div class="alert alert-warning">
+                                <p>User not Found!</p>
+                              </div>
                           </tr>
                       @endif
                     </tr>
@@ -167,5 +209,7 @@
       </div>
     </div>
   </div>
+
+
 
 @endsection

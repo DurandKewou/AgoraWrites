@@ -66,7 +66,10 @@
                           @endforeach
                       @else
                           <tr>
-                              <td colspan="6">Categorie not Found!</td>
+                            <div class="alert alert-warning">
+                                <p>Categorie not Found!</p>
+                              </div>
+                              <td colspan="6"></td>
                           </tr>
                           
                       @endif

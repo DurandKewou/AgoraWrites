@@ -1,4 +1,4 @@
-@extends('layouts.author')
+@extends('layouts.dashboard')
 
 @section('space-work')
     <div class="container">
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="text-center mt-3">
-                                        <a href="{{ route('author.index') }}" class="btn btn-primary">← Retour à la liste des articles</a>
+                                        <a href="{{ route('reader.index') }}" class="btn btn-primary">← Retour à la liste des articles</a>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                         <p>Aucun commentaire pour cet article.</p>
                     @else
                         <ul class="list-group mb-3">
-                            @foreach($post->comments->take(3) as $comment)
+                            @foreach($post->comments->take(2) as $comment)
                                 <li class="list-group-item">
                                     <div class="d-flex justify-content-between">
                                         <div>
@@ -117,7 +117,7 @@
                             </div>
                         </ul>
 
-                        @if($post->comments->count() > 2)
+                        @if($post->comments->count() > 3)
                             <div class="text-center mb-3">
                                 <button class="btn btn-link" id="toggle-comments">
                                     <i class="fas fa-chevron-down"></i> Voir plus
