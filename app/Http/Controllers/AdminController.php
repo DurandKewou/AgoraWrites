@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -20,9 +21,8 @@ class AdminController extends Controller
         $users = User::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'Admi');
         })->with('roles', 'permissions')->get(); // Récupérer tous les utilisateurs
-        $allUsers = User::all();
         $roles = Role::all(); // Récupérer tous les rôles disponibles
-        return view('admin.allUser', compact('users','roles','allUsers')); // Passer les utilisateurs à la vue
+        return view('admin.allUser', compact('users','roles')); // Passer les utilisateurs à la vue
     }
     /**
      * Show the profile of the authenticated user.
@@ -121,16 +121,24 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Récupérer l'utilisateur par son ID
+        $user = User::findOrFail($id);
+        return view('admin.profileUser', compact('user')); // Passer l'utilisateur à la vue
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function publishPost($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->status = 'published';
+        $post->save();
+
+        return redirect()->back()->with('success', 'Le post a été publié avec succès.');
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -155,4 +163,26 @@ class AdminController extends Controller
 
         return redirect()->route('admin.allUser')->with('success', 'Utilisateur supprimé avec succès.');
     }
+
+    public function stats(Request $request)
+    {
+        $posts = Post::with('user')->orderByDesc('views')->get();
+
+        $labels = $posts->map(function ($post) {
+            return $post->user->name . ' - ' . Str::limit($post->title, 20); // Limite titre à 20 caractères
+        });
+
+        $posts = Post::withCount(['likes', 'comments'])
+                ->with('user') // auteur du post
+                ->orderByDesc('views')
+                ->get();
+
+        $views = $posts->pluck('views');
+
+        return view('admin.statistics', [
+            'labels' => $labels,
+            'views' => $views,
+        ], compact('posts'));
+    }
+
 }

@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\PostReaction;
 use Illuminate\Support\Str;
 
 ini_set('memory_limit', '1024M');
@@ -28,7 +29,7 @@ class PostController extends Controller
      */
     public function postAdmin()
     {
-        $posts = Post::all();
+        $posts = Post::where('status', 'published')->get();
         return view('admin.index', compact('posts'));
     }
 
@@ -121,6 +122,9 @@ class PostController extends Controller
         }
 
         $post = Post::findOrFail($id);
+
+        $post->increment('views');
+        $post->save();
         $user = Auth::user();
         
 
@@ -139,6 +143,52 @@ class PostController extends Controller
         // Fallback
         return redirect()->back()->with('message', 'Redirection par défaut.');
     }
+    /**
+     * for like
+     */
+
+    public function like($id)
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('warning', 'Veuillez vous connecter pour aimer un post.');
+        }
+
+        $user = auth()->user();
+        $post = Post::findOrFail($id);
+
+        // Vérifie si l'utilisateur a déjà liké ce post
+        $existing = $post->reactions()->where('user_id', $user->id)->where('type', 'like')->first();
+        if ($existing) {
+            $existing->delete(); // Annuler le like (toggle)
+        } else {
+            $post->reactions()->create([
+                'user_id' => $user->id,
+                'type' => 'like',
+            ]);
+        }
+
+        return back();
+    }
+
+
+    /**e
+     * for dislike
+     */
+
+    public function dislike($postId)
+    {
+        $user = Auth::user();
+        $post = Post::findOrFail($postId);
+
+        $reaction = PostReaction::updateOrCreate(
+            ['user_id' => $user->id, 'post_id' => $post->id],
+            ['type' => 'dislike']
+        );
+
+        return redirect()->back()->with('success', 'Vous avez disliké ce post.');
+    }
+
+
 
     public function showPostAdmin($id)
     {

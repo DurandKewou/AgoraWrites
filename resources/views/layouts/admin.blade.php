@@ -12,6 +12,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome pour les icônes -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset(('assets/css/app.min.css'))}}">
   <link rel="stylesheet" href="{{asset(('assets/bundles/bootstrap-social/bootstrap-social.css'))}}">
@@ -209,6 +210,7 @@
                 <li><a href="/subscribe">Subscribe</a></li>
               </ul>
             </li>
+            <a href="/admin/statistics" class="menu-toggle nav-link has-dropdown"><span>Statistic</span></a>
           </ul>
         </aside>
       </div>
@@ -335,16 +337,22 @@
       });
   </script>
 
+
+
   <!-- General JS Scripts -->
   <script src="{{asset(('assets/js/app.min.js'))}}"></script>
   <!-- Bootstrap JS Bundle (nécessaire pour les modales) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  <!-- Ajoute Chart.js dans ton layout principal -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
   <!-- JS Libraies -->
   <script src="{{asset(('assets/bundles/chartjs/chart.min.js'))}}"></script>
   <script src="{{asset(('assets/bundles/owlcarousel2/dist/owl.carousel.min.js'))}}"></script>
   <script src="{{asset(('assets/bundles/summernote/summernote-bs4.js'))}}"></script>
+  <script src="{{asset(('assets/bundles/apexcharts/apexcharts.min.js'))}}"></script>
   <!-- Page Specific JS File -->
   <script src="{{asset(('assets/js/page/widget-data.js'))}}"></script>
+  <script src="{{asset(('assets/js/page/index.js'))}}"></script>
   <!-- Template JS File -->
   <script src="{{asset(('assets/js/scripts.js'))}}"></script>
   <!-- Custom JS File -->

@@ -34,7 +34,9 @@ class AuthorController extends Controller
      */
     public function postAuthor(Request $request)
     {
-        $posts = Post::where('user_id', auth()->id())->get();
+         $posts = Post::where('user_id', auth()->id())
+                 ->where('status', 'published')
+                 ->get();
         return view('author.post', compact('posts'));
     }
 
@@ -69,11 +71,13 @@ class AuthorController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required',
             'category_id' => 'required|exists:categories,id',
-            'status' => 'required|in:published,draft,dending',
+            'status' => 'nullable|in:published,rejected,pending',
             'tags' => 'array|nullable',
             'tags.*' => 'exists:tags,id',
             'image' => 'nullable|image|max:2048',
         ]);
+
+        $validated['status'] = $validated['status'] ?? 'pending';
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('posts', 'public');

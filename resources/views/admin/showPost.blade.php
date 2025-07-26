@@ -57,8 +57,8 @@
             </div>
         </section>
     </div>
-    <!-- Modal for comments -->
     
+    <!-- Modal for comments -->
     <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">

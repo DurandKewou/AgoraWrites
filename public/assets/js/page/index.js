@@ -318,10 +318,12 @@ function chart4() {
         },
     }
 
-    var chart = new ApexCharts(
-        document.querySelector("#chart4"),
-        options
-    );
+    var chartElement = document.querySelector("#chart4");
+    if (chartElement) {
+        var chart = new ApexCharts(chartElement, options);
+        chart.render();
+    }
+
 
     chart.render();
 
