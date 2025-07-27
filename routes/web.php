@@ -34,10 +34,12 @@ Route::get('/forgot-password',[UserController::class,'loadForgotPassword'])->nam
 Route::post('/forgot-password',[UserController::class,'userForgotPassword'])->name('userForgotPassword');
 
 Route::get('/reset-password/{email}',[UserController::class,'loadResetPassword'])->name('reset-password');
-Route::post('/',[UserController::class,'userResetPassword'])->name('userResetPassword');
+
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('/',[UserController::class,'userResetPassword'])->name('userResetPassword');
+
     Route::get('/posts/access/{id}', [PostController::class, 'access'])->name('post.access');
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/posts/{id}', [PostController::class, 'showPost'])->name('showPost');
@@ -62,6 +64,8 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     
     Route::get('/categorie',[CategoryController::class,'index'])->name('categorie');
     Route::post('/categorie',[CategoryController::class,'createCategorie'])->name('createCategorie');
+    Route::put('/categorie/edit/{id}', [CategoryController::class,'update'])->name('editCategorie');
+    Route::delete('/categorie/{id}', [CategoryController::class, 'destroy'])->name('destroyCategorie');
     Route::get('/post', [PostController::class,'allPost'])->name('index');
     Route::get('/post/create', [PostController::class,'createPost'])->name('createPost');
     Route::post('/post', [PostController::class,'SavePost'])->name('SavePost');

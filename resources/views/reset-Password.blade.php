@@ -34,7 +34,7 @@
                   @csrf
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" value="{{ $email }}" required autofocus>
+                    <input id="email" type="email" class="form-control" name="email" tabindex="1" value="{{ $email }}" required autofocus readonly>
                   </div>
                   <div class="form-group">
                     <label for="password">New Password</label>
@@ -46,8 +46,8 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="password-confirm">Confirm Password</label>
-                    <input id="password-confirm" type="password" class="form-control" name="confirm-password"
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input id="password_confirmation" type="password" class="form-control" name="password_confirmation"
                       tabindex="2" required>
                   </div>
                   @if ($errors->any())

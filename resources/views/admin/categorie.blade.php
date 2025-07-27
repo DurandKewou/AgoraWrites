@@ -50,19 +50,25 @@
 
                                   <td id="outer" class="d-flex justify-content-center align-items-center">
 
-                                    <a href=""  class="inner m-2 btn btn-sm btn-success" >View</a>
-                                    <a class="inner m-2 btn btn-sm btn-info" href="">Edit</a>
-                                    <form method="post" action="" class="inner">
+                                    {{-- Bouton Modifier --}}
+                                    <button type="submit" class="inner m-2 btn btn-sm btn-warning" data-toggle="modal" data-target="#changeCategoryModal">
+                                      <i class="fas fa-edit"></i></button>
 
-                                      @method('DELETE')
-                                      @csrf
-                                      <input type="hidden" name="todo_id" value="{{ $categorie->id }}">
-                                      <input type="submit" class="btn btn-sm btn-danger" value="Delete">
+                                    {{-- Formulaire Supprimer --}}
+                                    <form method="POST" action="{{ route('admin.destroyCategorie', $categorie->id) }}" class="inner m-2">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <input type="hidden" name="category_id" value="{{ $categorie->id }}">
+
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Confirmer la suppression ?')">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </button>
                                     </form>
-                                  </td>
+                                </td>
+
                                   
                               </tr>
-                            </tr>
                           @endforeach
                       @else
                           <tr>
@@ -134,6 +140,40 @@
           </form>
         </div>
       </div>
+    </div>
+  </div>
+
+    <!-- Modal pour modifier le rôle -->
+  <div class="modal fade" id="changeCategoryModal" tabindex="1" role="dialog" aria-labelledby="changeCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="changeRoleModalLabel">Modifier la Category </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ route('admin.editCategorie', $categorie->id) }}" method="POST">
+              @csrf
+              @method('PUT')
+              <div class="form-group">
+                <label for="role">Category</label>
+                <input type="text" value="{{ $categorie->name }}" class="form-control" name="name" required>
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" value="{{ $categorie->description }}"  name="description" required>
+                </div>
+              </div>
+             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+              </div> 
+            </form>  
+          </div>
+        </div>
     </div>
   </div>
 

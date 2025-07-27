@@ -21,7 +21,8 @@ class DashboardController extends Controller
 
         $authors = User::has('posts')->get();
 
-        $posts = Post::with(['user', 'likes', 'comments'])
+        $posts = Post::with(['user'])
+            ->withCount(['likes', 'comments']) // ✅ Ajoute les comptes automatiques
             ->when($authorId, fn($query) => $query->where('user_id', $authorId))
             ->get();
 
@@ -37,6 +38,7 @@ class DashboardController extends Controller
             'comments' => $comments,
             'authors' => $authors,
             'authorId' => $authorId,
+            'posts' => $posts,
         ]);
     }
 

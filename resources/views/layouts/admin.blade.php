@@ -319,6 +319,7 @@
     </div>
   </div>
 
+  @yield('scripts')
 
   <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -351,7 +352,7 @@
   <script src="{{asset(('assets/bundles/summernote/summernote-bs4.js'))}}"></script>
   <script src="{{asset(('assets/bundles/apexcharts/apexcharts.min.js'))}}"></script>
   <!-- Page Specific JS File -->
-  <script src="{{asset(('assets/js/page/widget-data.js'))}}"></script>
+  {{-- <script src="{{asset(('assets/js/page/widget-data.js'))}}"></script> --}}
   <script src="{{asset(('assets/js/page/index.js'))}}"></script>
   <!-- Template JS File -->
   <script src="{{asset(('assets/js/scripts.js'))}}"></script>

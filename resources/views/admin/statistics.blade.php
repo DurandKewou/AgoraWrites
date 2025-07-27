@@ -1,15 +1,15 @@
 @extends('layouts/admin')
 
 @section('styles')
-<style>
-  #outer{
-    width: auto;
-    text-align: center;
-  }
-  .inner{
-    display: inline-block;
-  }
-</style>
+  <style>
+    #outer{
+      width: auto;
+      text-align: center;
+    }
+    .inner{
+      display: inline-block;
+    }
+  </style>
 @endsection
 
 @section('space-work')
@@ -103,42 +103,55 @@
 
 @endsection
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-const ctx = document.getElementById('viewsChart')?.getContext('2d');
-if (ctx) {
-    const chart = new Chart(ctx, {
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const canvas = document.getElementById('viewsChart');
+      if (!canvas) {
+        console.error("Canvas #viewsChart introuvable dans le DOM.");
+        return;
+      }
+
+      const ctx = canvas.getContext('2d');
+
+      new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: @json($labels),
-            datasets: [{
-                label: 'Nombre de vues',
-                data: @json($views),
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
+          labels: @json($labels),
+          datasets: [
+            {
+              label: 'Vues',
+              data: @json($views),
+              backgroundColor: 'rgba(54, 162, 235, 0.7)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Likes',
+              data: @json($likes),
+              backgroundColor: 'rgba(255, 99, 132, 0.7)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Commentaires',
+              data: @json($comments),
+              backgroundColor: 'rgba(255, 206, 86, 0.7)',
+              borderColor: 'rgba(255, 206, 86, 1)',
+              borderWidth: 1
+            }
+          ]
         },
         options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Vues'
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Post'
-                    }
-                }
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
             }
+          }
         }
+      });
     });
-}
-</script>
-
+  </script>
 @endsection
+
