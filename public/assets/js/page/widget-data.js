@@ -62,7 +62,7 @@ $('.follow-btn, .following-btn').each(function () {
   });
 
 // card chart 1
-var ctx = document.getElementById("cardChart1").getContext("2d");
+// var ctx = document.getElementById("cardChart1").getContext("2d");
 var gradientStroke2 = ctx.createLinearGradient(0, 0, 700, 0);
 gradientStroke2.addColorStop(0, "rgba(255, 204, 128, 1)");
 gradientStroke2.addColorStop(0.5, "rgba(255, 152, 0, 1)");
@@ -118,7 +118,7 @@ var myChart = new Chart(ctx, {
 });
 
 // card chart 2
-var ctx = document.getElementById("cardChart2").getContext("2d");
+// var ctx = document.getElementById("cardChart2").getContext("2d");
 var gradientStroke2 = ctx.createLinearGradient(500, 0, 0, 0);
 gradientStroke2.addColorStop(0, "rgba(55, 154, 80, 1)");
 gradientStroke2.addColorStop(1, "rgba(131, 210, 151, 1)");
@@ -173,7 +173,7 @@ var myChart = new Chart(ctx, {
 });
 
 // card chart 3
-var ctx = document.getElementById("cardChart3").getContext("2d");
+// var ctx = document.getElementById("cardChart3").getContext("2d");
 var gradientStroke2 = ctx.createLinearGradient(0, 0, 700, 0);
 gradientStroke2.addColorStop(0, "rgba(103, 119, 239, 1)");
 gradientStroke2.addColorStop(0.5, "rgba(106, 120, 220, 1)");
@@ -229,7 +229,7 @@ var myChart = new Chart(ctx, {
 });
 
 // card chart 4
-var ctx = document.getElementById("cardChart4").getContext("2d");
+// var ctx = document.getElementById("cardChart4").getContext("2d");
 var gradientStroke2 = ctx.createLinearGradient(0, 0, 700, 0);
 gradientStroke2.addColorStop(0, "rgba(61, 199, 190, 1)");
 gradientStroke2.addColorStop(0.5, "rgba(57, 171, 163, 1)");

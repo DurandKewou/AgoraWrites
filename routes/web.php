@@ -9,9 +9,11 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\ReaderController; 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use Dom\Comment;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', [PostController::class, 'index']);
 
@@ -32,13 +34,19 @@ Route::get('/forgot-password',[UserController::class,'loadForgotPassword'])->nam
 Route::post('/forgot-password',[UserController::class,'userForgotPassword'])->name('userForgotPassword');
 
 Route::get('/reset-password/{email}',[UserController::class,'loadResetPassword'])->name('reset-password');
-Route::post('/',[UserController::class,'userResetPassword'])->name('userResetPassword');
+
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('/',[UserController::class,'userResetPassword'])->name('userResetPassword');
+
     Route::get('/posts/access/{id}', [PostController::class, 'access'])->name('post.access');
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/posts/{id}', [PostController::class, 'showPost'])->name('showPost');
+    Route::post('/post/{id}/like', [PostController::class, 'like'])->name('post.like');
+    Route::post('/post/{id}/dislike', [PostController::class, 'dislike'])->name('post.dislike');
+   
+
 });
 
 
@@ -56,6 +64,8 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     
     Route::get('/categorie',[CategoryController::class,'index'])->name('categorie');
     Route::post('/categorie',[CategoryController::class,'createCategorie'])->name('createCategorie');
+    Route::put('/categorie/edit/{id}', [CategoryController::class,'update'])->name('editCategorie');
+    Route::delete('/categorie/{id}', [CategoryController::class, 'destroy'])->name('destroyCategorie');
     Route::get('/post', [PostController::class,'allPost'])->name('index');
     Route::get('/post/create', [PostController::class,'createPost'])->name('createPost');
     Route::post('/post', [PostController::class,'SavePost'])->name('SavePost');
@@ -63,6 +73,7 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/post/update/{id}', [PostController::class,'update'])->name('update');
     Route::delete('/post/delete/{id}', [PostController::class,'destroy'])->name('delete');
     Route::get('/postlist', [PostController::class,'postAdmin']);
+    Route::put('/posts/publish/{id}', [AdminController::class, 'publishPost'])->name('publishPost');
     Route::get('/posts/{id}', [PostController::class, 'showPostAdmin'])->name('showPost');
     Route::get('/showComment', [CommentController::class,'showComment']);
     Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
@@ -71,10 +82,17 @@ Route::middleware(['auth', 'role:Admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/editUser/{id}', [AdminController::class, 'editUser'])->name('edit');
     Route::put('/updateUser/{id}', [UserController::class, 'updateRole'])->name('updateRole');
     Route::delete('/deleteUser/{id}', [UserController::class, 'destroy'])->name('deleteUser');
+    Route::get('/profileUser/{id}', [AdminController::class, 'show'])->name('profileUser');
     Route::get('/edit/{id}', [AdminController::class,'edit'])->name('edit');
     Route::put('/update/{id}', [AdminController::class,'update'])->name('update');
     Route::get('/edit/{id}', [AuthorController::class,'edit'])->name('edit');
     Route::delete('/delete/{id}', [AdminController::class,'destroyPost'])->name('delete');
+
+    
+    Route::get('/statistics', [DashboardController::class, 'stats'])->name('statistics');
+    Route::get('/dashboard/export/{format}', [DashboardController::class, 'export'])->name('dashboard.export');
+    Route::get('/export-posts', [DashboardController::class, 'exportExcel'])->name('excel');
+
 });
 
 // Assuming you have an AuthorController for author functionalities

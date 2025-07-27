@@ -13,7 +13,7 @@ class ReaderController extends Controller
     public function index()
     {
         //$post = Post::with('user')->get(); // Assuming you want to show all posts for the reader
-        $posts = Post::all(); // Fetch all posts from the database
+        $posts = Post::where('status', 'published')->get(); // Fetch all posts from the database
         return view('reader.index', compact('posts')); // Return the view with posts
         //
     }

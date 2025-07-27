@@ -213,6 +213,7 @@ class UserController extends Controller
 
     public function updateRole(Request $request, $id)
     {
+        //dd($request->all());
         $request->validate([
             'role' => 'required|exists:roles,name'  // Le nom doit exister dans la table `roles`
         ]);

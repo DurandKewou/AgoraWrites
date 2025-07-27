@@ -92,9 +92,13 @@
                             <td>{{ $post->views }}</td>
                             <td>
                               @if($post->status === 'published')
-                                  <div class="badge badge-success"> <i class="fas fa-check-circle me-1"></i> {{ $post->status }}</div>
+                                <span class="badge badge-success">
+                                  <i class="fas fa-check-circle"></i> Published
+                                </span>
                               @else
-                                  <div class="badge badge-warning"><i class="fas fa-clock me-1"></i> {{ $post->status }}</div>
+                                  <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#publishModal-{{ $post->id }}">
+                                    Pending
+                                  </button>
                               @endif
                           </td>
                           <td class="text-center">
@@ -155,5 +159,34 @@
       </div>
     </section>
   </div>
+
+  @if($post->status === 'pending')
+<!-- Modal pour valider la publication -->
+<div class="modal fade" id="publishModal-{{ $post->id }}" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel-{{ $post->id }}" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form action="{{ route('admin.publishPost', $post->id) }}" method="POST">
+      @csrf
+      @method('PUT')
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Valider la publication</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4>{{ $post->title }}</h4>
+          <p>{!! nl2br(e($post->content)) !!}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Publier</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+@endif
+
 
 @endsection

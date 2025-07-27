@@ -66,16 +66,24 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $categorie = Category::findOrFail($id);
+        $categorie->name = $request->input('name'); // par exemple
+        $categorie->description = $request->input('description'); 
+        $categorie->save();
+
+        return redirect()->route('admin.categorie')->with('success', 'Catégorie mise à jour.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+        public function destroy($id)
     {
-        //
+        $categorie = Category::findOrFail($id);
+        $categorie->delete();
+
+        return redirect()->route('admin.categorie')->with('success', 'Catégorie supprimée.');
     }
 }

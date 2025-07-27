@@ -70,16 +70,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
-                                        <div class="col-sm-12 col-md-7">
-                                        <select class="form-control selectric" name="status">
-                                            <option value="draft" {{ $post->status == 'draft' ? 'selected' : '' }}>Brouillon</option>
-                                            <option value="published" {{ $post->status == 'published' ? 'selected' : '' }}>Publié</option>
-                                            <option value="dending" {{ $post->status == 'dending' ? 'selected' : '' }}>En attente</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                         <div class="col-sm-12 col-md-7">
                                             <button type="submit" class="btn btn-success">Mettre à jour</button>
